@@ -87,7 +87,6 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
 
         m_prolog.setUserOutputStream(m_outs);
         m_prolog.setUserInputStream(m_consoleView.getInputStream());
-        m_prolog.setMainFrame(m_mainFrame);
         
         // Add EventListener
         m_prolog.addEventListener(this);
