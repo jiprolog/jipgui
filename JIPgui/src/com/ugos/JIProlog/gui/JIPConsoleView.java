@@ -272,10 +272,7 @@ public abstract class JIPConsoleView extends Panel implements IJIPConsoleView, A
             {
                 Dialogs.showTextMessageDlg(m_mainFrame, "About",
                                            "\nJIProlog Console v" + JIPConsoleController.VERSION +
-                                           "\nBased on JIProlog v" + JIPEngine.getVersion() +
-                                           "\nBy Ugo Chirico, http://www.ugochirico.com" +
-                                           "\nCopyright (c) 1999-2007 By Ugo Chirico." +
-                                           "\nAll rights reserved");
+                                           "\nBased on " + JIPEngine.getInfo());
             }
         }
     }
@@ -320,9 +317,7 @@ public abstract class JIPConsoleView extends Panel implements IJIPConsoleView, A
         m_outs.println("***************************************");
         m_outs.println("* JIProlog - Java Internet Prolog");
         m_outs.println("* Version: " + JIPEngine.getVersion());
-        m_outs.println("* Copyright (c) 1999-2007 By Ugo Chirico.");
-        m_outs.println("* All rights reserved");
-        m_outs.println("* http://www.ugochirico.com");
+        m_outs.println("* " + JIPEngine.getCopyrightInfo());//Copyright (c) 1999-2014 By Ugo Chirico.");
         m_outs.println("* License: " + JIPEngine.getLicenseInfo());
         m_outs.println("***************************************");
         m_mainArea.prompt();
