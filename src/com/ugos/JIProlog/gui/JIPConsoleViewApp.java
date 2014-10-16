@@ -21,15 +21,21 @@
 
 package com.ugos.JIProlog.gui;
 
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import com.ugos.JIProlog.engine.*;
-import com.ugos.awt.*;
-import com.ugos.io.*;
-import com.ugos.JIProlog.igui.*;
+import java.awt.CheckboxMenuItem;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.MenuItem;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import com.ugos.JIProlog.engine.JIPEngine;
+import com.ugos.awt.Dialogs;
 
 public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
 {
@@ -41,27 +47,27 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
 //  private Menu             m_mnuFontName;
     private Menu             m_mnuWinDim;
     private Menu             m_mnuReg;
-    
-    private CheckboxMenuItem m_mnuiTrace;
+
+//    private CheckboxMenuItem m_mnuiTrace;
     private CheckboxMenuItem m_curmnuiFontSize;
     private CheckboxMenuItem m_curmnuiDimensions = null;
-    
+
     // Constructor
     public JIPConsoleViewApp(Frame mainFrame)
     {
         super(mainFrame);
     }
-            
+
     // Initializzation
     public void init()
     {
         // Set Menu
         MenuBar menuBar = new MenuBar();
         m_mnuFile = new Menu("File", true);
-        
+
         MenuItem mi;
         //MenuShortcut mnsh;
-        
+
         //mnsh = new MenuShortcut('n');
         mi = new MenuItem("New");
         mi.addActionListener(this);
@@ -71,45 +77,45 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
         mi = new MenuItem("Open");
         mi.addActionListener(this);
         m_mnuFile.add(mi);
-        
+
         m_mnuFile.addSeparator();
-        
+
         //mnsh = new MenuShortcut('x');
         mi = new MenuItem("Exit");
         mi.addActionListener(this); // e' necessario per ogni item nel menu
         m_mnuFile.add(mi);
-        
+
         /////////////////
-        
+
         menuBar.add(m_mnuFile);
-        
+
         /////////////////
-                
+
         /////////////////
-        
+
         CheckboxMenuItem mic;
-        
+
         m_mnuTools = new Menu("Tools");
         //mnsh = new MenuShortcut('d');
         mi = new MenuItem("Reset database");
         mi.setActionCommand("Reset");
         mi.addActionListener(this);
         m_mnuTools.add(mi);
-        
+
         //mnsh = new MenuShortcut('s');
         mi = new MenuItem("Stop execution");
         mi.setActionCommand("Stop");
         mi.addActionListener(this);
         mi.setEnabled(false);
         m_mnuTools.add(mi);
-        
+
 //        m_mnuiTrace = new CheckboxMenuItem("Trace", false);
 //        m_mnuiTrace.addItemListener(this);
 //        m_mnuTools.add(m_mnuiTrace);
-    
+
         m_mnuTools.addSeparator();
         menuBar.add(m_mnuTools);
-        
+
         // Font
         m_mnuFontSize = new Menu("Font Size");
         for (int i = 6; i < 21; i++)
@@ -117,16 +123,16 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
             mic = new CheckboxMenuItem("size: " + i, i == s_nDefaultFontSize);
             if(i == s_nDefaultFontSize)
                 m_curmnuiFontSize = mic;
-            
+
             mic.addItemListener(this);
             m_mnuFontSize.add(mic);
         }
-        
+
         m_mnuTools.add(m_mnuFontSize);
-        
+
         // Font
         m_mnuWinDim = new Menu("Window Size");
-        
+
         // windows
         Dimension ds = Toolkit.getDefaultToolkit().getScreenSize();
         ds.width  *= (9.0/10.0);
@@ -135,18 +141,18 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
         mic = new CheckboxMenuItem("1: " + strBestDim + " (best)", false);
         mic.addItemListener(this);
         m_mnuWinDim.add(mic);
-        
+
         ds = s_winDim;
         String strInitDim = ds.width + "x" + ds.height;
         mic = new CheckboxMenuItem("2: " + strInitDim + " (initial)", false);
         mic.addItemListener(this);
         m_mnuWinDim.add(mic);
-        
+
         double dRatio = (double)s_winDim.height / (double)s_winDim.width;
-        
+
         int nWidth  = 200;
         int nHeight = (int)(nWidth * dRatio);
-        
+
         for(int i = 3; i < 10; i++)
         {
             if(!strBestDim.equals(nWidth + "x" + nHeight) && !strInitDim.equals(nWidth + "x" + nHeight))
@@ -155,68 +161,68 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
                 mic.addItemListener(this);
                 m_mnuWinDim.add(mic);
             }
-            
+
             nWidth  += 100;
             nHeight = (int)(nWidth * dRatio);
         }
-        
+
         m_mnuTools.add(m_mnuWinDim);
-                
+
         // Colors
         m_mnuColors = new Menu("Background Color");
         mic = new CheckboxMenuItem("White", s_defaultBckgColor == Color.white);
         mic.addItemListener(this);
         m_mnuColors.add(mic);
-        
+
         mic = new CheckboxMenuItem("Black", s_defaultBckgColor == Color.black);
         mic.addItemListener(this);
         m_mnuColors.add(mic);
         m_mnuTools.add(m_mnuColors);
-        
+
         /////////////////
-        
+
         m_mnuReg = new Menu("Help");
         //mnsh = new MenuShortcut('r');
         mi = new MenuItem("View License");
         mi.setActionCommand("ViewReg");
         mi.addActionListener(this);
         m_mnuReg.add(mi);
-        
+
         //mnsh = new MenuShortcut('b');
         mi = new MenuItem("About");
         mi.setActionCommand("About");
         mi.addActionListener(this);
         m_mnuReg.add(mi);
-        
+
         menuBar.add(m_mnuReg);
-                        
+
         m_mainFrame.setMenuBar(menuBar);
-        
+
         /////////////////
-        
+
         super.init();
     }
-    
-    
-              
+
+
+
     public void enableNew(boolean bEnable)
     {
         // New
         m_mnuFile.getItem(0).setEnabled(bEnable);
     }
-    
+
     public void enableOpen(boolean bEnable)
     {
         // Open
         m_mnuFile.getItem(1).setEnabled(bEnable);
     }
-    
+
     public void enableReset(boolean bEnable)
     {
         // Reset
         m_mnuTools.getItem(0).setEnabled(bEnable);
     }
-    
+
     public void enableStop(boolean bEnable)
     {
         // Stop
@@ -229,15 +235,15 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
         {
             if(!m_mainArea.isEditable())
                 return;
-                
+
             String strQuery = evt.getActionCommand();
-            
+
             m_consoleCtrl.onQuery(strQuery);
         }
         else if(evt.getSource() instanceof MenuItem)
         {
             String command = evt.getActionCommand();
-            
+
             if(command.equals("New"))
             {
                 m_consoleCtrl.onNewFile();
@@ -325,7 +331,7 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
 //              m_curmnuiFontName = (CheckboxMenuItem)e.getSource();
 //            }
         }
-            
+
         m_mainArea.requestFocus();
     }
 }

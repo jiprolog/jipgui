@@ -19,9 +19,9 @@ public class SplashWnd extends Window
     public SplashWnd(Frame mainFrame)
     {
         super(mainFrame);
-                
+
         Image jipIco = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/JIProlog/gui/resources/icoJip.gif"));
-        
+
 //        if(s_screenSize.width >= 640)
 //        {
             jipIco = jipIco.getScaledInstance(45, 40, Image.SCALE_SMOOTH);
@@ -31,11 +31,11 @@ public class SplashWnd extends Window
 //            //PDA
 //            jipIco = jipIco.getScaledInstance(s_screenSize.height / 3, s_screenSize.height / 3, Image.SCALE_SMOOTH);
 //        }
-        
-        
+
+
         ImageCanvas img =
             new ImageCanvas(jipIco);
-        
+
         setLayout(new GridLayout(2,1));
         add(img);
         Panel pan = new Panel();
@@ -44,7 +44,7 @@ public class SplashWnd extends Window
         lab.setFont(new Font("Arial", Font.PLAIN, 11));
         lab.setForeground(Color.white);
         pan.add(lab);
-        lab = new Label("Copyright (c) 1999-2007 by Ugo Chirico", Label.CENTER);
+        lab = new Label("Copyright (c) 1999-2014 by Ugo Chirico", Label.CENTER);
         lab.setFont(new Font("Arial", Font.PLAIN, 9));
         lab.setForeground(Color.white);
         pan.add(lab);
@@ -52,22 +52,22 @@ public class SplashWnd extends Window
         lab.setFont(new Font("Arial", Font.PLAIN, 9));
         lab.setForeground(Color.white);
         pan.add(lab);
-        lab = new Label("http://www.ugochirico.com", Label.CENTER);
+        lab = new Label("http://www.jiprolog.com", Label.CENTER);
         lab.setFont(new Font("Arial", Font.PLAIN, 11));
         lab.setForeground(Color.white);
         pan.add(lab);
-        
+
         add(pan);
         setBackground(JIPConsoleView.BKGCOLOR);
     }
-    
+
     /**
      * Shows the frame.
      */
     public void show()
     {
         Dimension size;
-        
+
         if(s_screenSize.width >= 640)
         {
             size = new Dimension(210,130);
@@ -86,12 +86,12 @@ public class SplashWnd extends Window
 
         //Dimension size = getPreferredSize();
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        
-        
+
+
         //setVisible(true);
         super.show();
     }
-    
+
 //  public void paint(Graphics g)
 //  {
 //      //super.paint(g);
