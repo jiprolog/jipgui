@@ -19,7 +19,7 @@
  */
 
 
-package com.ugos.JIProlog.gui;
+package com.ugos.jiprolog.gui;
 
 import java.awt.*;
 import java.awt.event.*;
