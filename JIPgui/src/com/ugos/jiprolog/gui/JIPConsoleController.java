@@ -19,7 +19,7 @@
  */
 
 
-package com.ugos.JIProlog.gui;
+package com.ugos.jiprolog.gui;
 
 import java.awt.Frame;
 import java.io.IOException;
@@ -38,8 +38,8 @@ import com.ugos.JIProlog.engine.JIPRuntimeException;
 import com.ugos.JIProlog.engine.JIPSyntaxErrorException;
 import com.ugos.JIProlog.engine.JIPTerm;
 import com.ugos.JIProlog.engine.JIPVariable;
-import com.ugos.JIProlog.igui.IJIPConsoleController;
-import com.ugos.JIProlog.igui.IJIPConsoleView;
+import com.ugos.jiprolog.igui.IJIPConsoleController;
+import com.ugos.jiprolog.igui.IJIPConsoleView;
 
 public class JIPConsoleController implements IJIPConsoleController, JIPEventListener
 {

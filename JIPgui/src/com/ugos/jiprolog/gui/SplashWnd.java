@@ -4,7 +4,7 @@
  * @author Created by Omnicore CodeGuide
  */
 
-package com.ugos.JIProlog.gui;
+package com.ugos.jiprolog.gui;
 
 import com.ugos.JIProlog.engine.*;
 import java.awt.*;

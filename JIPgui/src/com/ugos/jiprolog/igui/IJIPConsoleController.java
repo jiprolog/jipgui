@@ -4,7 +4,7 @@
  * @author Created by Omnicore CodeGuide
  */
 
-package com.ugos.JIProlog.igui;
+package com.ugos.jiprolog.igui;
 import com.ugos.JIProlog.engine.*;
 
 public interface IJIPConsoleController

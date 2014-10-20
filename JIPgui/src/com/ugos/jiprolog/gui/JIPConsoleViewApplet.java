@@ -19,17 +19,18 @@
  */
 
 
-package com.ugos.JIProlog.gui;
+package com.ugos.jiprolog.gui;
 
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.net.*;
+
 import com.ugos.JIProlog.engine.*;
 import com.ugos.awt.*;
 import com.ugos.io.*;
-import com.ugos.JIProlog.igui.*;
+import com.ugos.jiprolog.igui.*;
 
 public class JIPConsoleViewApplet extends JIPConsoleView
 {
