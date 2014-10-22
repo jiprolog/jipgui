@@ -23,11 +23,12 @@ package com.ugos.jiprolog.gui;
 
 import com.ugos.awt.XDialog;
 import com.ugos.io.*;
+import com.ugos.jiprolog.engine.*;
+
 import java.awt.*;
 import java.io.*;
 import java.net.*;
 import java.awt.event.*;
-import com.ugos.JIProlog.engine.*;
     
 public class TraceDialog extends XDialog implements ActionListener, JIPTraceListener
 {
