@@ -6,7 +6,8 @@
 
 package com.ugos.jiprolog.gui;
 
-import com.ugos.JIProlog.engine.*;
+import com.ugos.jiprolog.engine.*;
+
 import java.awt.*;
 import java.awt.event.*;
 

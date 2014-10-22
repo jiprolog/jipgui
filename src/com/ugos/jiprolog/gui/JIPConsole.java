@@ -27,9 +27,9 @@ import java.awt.event.*;
 import java.io.*;
 import java.net.*;
 
-import com.ugos.JIProlog.engine.*;
 import com.ugos.awt.*;
 import com.ugos.io.*;
+import com.ugos.jiprolog.engine.*;
 import com.ugos.jiprolog.igui.*;
 
 public class JIPConsole extends ApplicationFrame //implements Runnable
@@ -41,6 +41,8 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
     // To run JIP as an application
     public static void main(String args[])
     {
+//    	JIPDebugger.debug = true;
+
             JIPConsole console = new JIPConsole();
             console.processArgs(args);
     }

@@ -23,12 +23,13 @@ package com.ugos.jiprolog.gui;
 
 import com.ugos.awt.*;
 import com.ugos.io.*;
+import com.ugos.jiprolog.engine.*;
+
 import java.awt.*;
 import java.util.*;
 import java.io.*;
 import java.net.*;
 import java.awt.event.*;
-import com.ugos.JIProlog.engine.*;
      
 public class EditFrame extends XFrame implements JIPEventListener, ActionListener, KeyListener, MouseListener//, ItemListener
 {

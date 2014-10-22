@@ -5,7 +5,7 @@
  */
 
 package com.ugos.jiprolog.igui;
-import com.ugos.JIProlog.engine.*;
+import com.ugos.jiprolog.engine.*;
 
 public interface IJIPConsoleController
 {

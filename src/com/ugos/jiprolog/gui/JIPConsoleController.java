@@ -26,18 +26,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
-import java.util.Properties;
 
-import com.ugos.JIProlog.engine.JIPCons;
-import com.ugos.JIProlog.engine.JIPEngine;
-import com.ugos.JIProlog.engine.JIPErrorEvent;
-import com.ugos.JIProlog.engine.JIPEvent;
-import com.ugos.JIProlog.engine.JIPEventListener;
-import com.ugos.JIProlog.engine.JIPRuntimeException;
-import com.ugos.JIProlog.engine.JIPSyntaxErrorException;
-import com.ugos.JIProlog.engine.JIPTerm;
-import com.ugos.JIProlog.engine.JIPVariable;
+import com.ugos.jiprolog.engine.JIPCons;
+import com.ugos.jiprolog.engine.JIPDebugger;
+import com.ugos.jiprolog.engine.JIPEngine;
+import com.ugos.jiprolog.engine.JIPErrorEvent;
+import com.ugos.jiprolog.engine.JIPEvent;
+import com.ugos.jiprolog.engine.JIPEventListener;
+import com.ugos.jiprolog.engine.JIPRuntimeException;
+import com.ugos.jiprolog.engine.JIPSyntaxErrorException;
+import com.ugos.jiprolog.engine.JIPTerm;
+import com.ugos.jiprolog.engine.JIPVariable;
 import com.ugos.jiprolog.igui.IJIPConsoleController;
 import com.ugos.jiprolog.igui.IJIPConsoleView;
 

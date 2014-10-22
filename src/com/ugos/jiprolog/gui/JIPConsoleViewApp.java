@@ -34,8 +34,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import com.ugos.JIProlog.engine.JIPEngine;
 import com.ugos.awt.Dialogs;
+import com.ugos.jiprolog.engine.JIPEngine;
 
 public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
 {
