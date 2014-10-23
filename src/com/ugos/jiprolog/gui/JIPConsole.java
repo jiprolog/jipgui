@@ -43,8 +43,14 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
     {
 //    	JIPDebugger.debug = true;
 
-            JIPConsole console = new JIPConsole();
-            console.processArgs(args);
+    	if(args.length == 1)
+    	{
+    		if(args[0].equals("-debug"))
+    			JIPDebugger.debug = true;
+    	}
+
+        JIPConsole console = new JIPConsole();
+        console.processArgs(args);
     }
 
     // Constructor
@@ -64,7 +70,7 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
             Thread.currentThread().sleep(1500);
 
             // set icon
-            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/JIProlog/gui/resources/icoJip.gif")));
+            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/icoJip.gif")));
         }
         catch(Throwable ex)
         {}
@@ -86,7 +92,8 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
     {
         for(int i = 0; i < args.length; i++)
         {
-            m_consoleCtrl.openFile(args[i]);
+        	if(!args[i].startsWith("-"))
+        		m_consoleCtrl.openFile(args[i]);
         }
     }
 

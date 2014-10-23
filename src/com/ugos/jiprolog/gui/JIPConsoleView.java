@@ -173,7 +173,7 @@ public abstract class JIPConsoleView extends Panel implements IJIPConsoleView, A
     public void initSouth()
     {
         // Bottom panel
-        Label copyr   = new Label("Copyright (c) 1999-2012 by Ugo Chirico. All rights reserved", Label.RIGHT);
+        Label copyr   = new Label(JIPEngine.getCopyrightInfo(), Label.RIGHT);
 
         copyr.setFont(new Font("Arial", Font.BOLD, s_nDefaultFontSize - 2));
         copyr.setForeground(Color.white);
