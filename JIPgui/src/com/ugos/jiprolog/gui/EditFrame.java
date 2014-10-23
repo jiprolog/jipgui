@@ -30,7 +30,7 @@ import java.util.*;
 import java.io.*;
 import java.net.*;
 import java.awt.event.*;
-     
+
 public class EditFrame extends XFrame implements JIPEventListener, ActionListener, KeyListener, MouseListener//, ItemListener
 {
     private TextArea  m_editArea;
@@ -39,15 +39,15 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
     private String    m_strFileName;
     private boolean   m_bChanged = false;
     private Label     m_lbLineNumber;
-        
+
     private static int       s_nDocument = 0;
     private static Vector    s_docsVector = new Vector(5);
-    
+
     public static void newFile(JIPEngine engine)
     {
         new EditFrame(engine).show();
     }
-    
+
     public static void openFile(JIPEngine engine)
     {
         EditFrame edt = new EditFrame(engine);
@@ -57,15 +57,15 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             edt.loadFile(strFile);
             edt.update(strFile);
         }
-        
+
         edt.show();
     }
-    
+
     public static void openFile(JIPEngine engine, String strFileName)
     {
         new EditFrame(engine, strFileName).show();
     }
-    
+
     public static void setMainFrame(Frame mainFrame)
     {
         s_docsVector.insertElementAt(mainFrame, 0);
@@ -74,26 +74,26 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
     private EditFrame(JIPEngine engine)
     {
         super();
-        
+
         s_nDocument++;
-                
+
         s_docsVector.addElement(this);
-        
+
         // icons
-        URL url = getClass().getResource("/com/ugos/JIProlog/gui/resources/icoJipDoc.gif");
+        URL url = getClass().getResource("/com/ugos/jiprolog/gui/resources/icoJipDoc.gif");
         if(url != null)
             setIconImage(Toolkit.getDefaultToolkit().getImage(url));
-        
+
         Dimension ds = JIPConsoleView.s_winDim;
         //Dimension ds = Toolkit.getDefaultToolkit().getScreenSize();
         setSize((int) (ds.width * (9.0/10.0)), (int)(ds.height * (9.0/10.0)));
-                
+
         m_engine = engine;
-        
+
         MenuBar menuBar = new MenuBar();
         Menu menu = new Menu("File");
         MenuItem mi;
-                
+
         //MenuShortcut mnsh = new MenuShortcut('n');
         //mi = new MenuItem("New", mnsh);
         mi = new MenuItem("New");
@@ -107,51 +107,51 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         menu.add(mi);
 
         ////////////////
-        
+
         //mnsh = new MenuShortcut('s');
         //mi = new MenuItem("Save", mnsh);
         mi = new MenuItem("Save");
         mi.addActionListener(this); // e' necessario per ogni item nel menu
         menu.add(mi);
-        
+
         ////////////////
-        
+
         //mnsh = new MenuShortcut('a');
         mi = new MenuItem("Save as");
         mi.addActionListener(this); // e' necessario per ogni item nel menu
         menu.add(mi);
-        
+
         /////////////////
-        
+
         menu.addSeparator();
-        
+
         /////////////////
-        
+
         //mnsh = new MenuShortcut('t');
         mi = new MenuItem("Consult");
         mi.addActionListener(this); // e' necessario per ogni item nel menu
         menu.add(mi);
-        
+
         /////////////////
-        
+
         menu.addSeparator();
-        
+
         /////////////////
-        
+
         //mnsh = new MenuShortcut('e');
         mi = new MenuItem("Close");
         mi.addActionListener(this); // e' necessario per ogni item nel menu
         menu.add(mi);
-                
+
         /////////////////
-        
+
         menuBar.add(menu);
-                
+
         /////////////////
-        
+
         // add win menù
         menu = new Menu("Windows");
-                
+
         //mnsh = new MenuShortcut('j');
         mi = new MenuItem("JIProlog Console");
         mi.addActionListener(this);
@@ -161,37 +161,37 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
 //        mi = new Menu("Windows");
 //        mi.addActionListener(this);
 //      menu.add(mi);
-        
+
         /////////////////
-        
+
         /////////////////
         menu = new Menu("Help");
         //mnsh = new MenuShortcut('h');
         mi = new MenuItem("JIProlog Editor Quick Help");
         mi.addActionListener(this);
         menu.add(mi);
-        
+
         /////////////////
-        
+
         menuBar.add(menu);
         setMenuBar(menuBar);
-        
+
         /////////////////
-                
+
         setLayout(new BorderLayout());
-        
+
         m_editArea    = new TextArea();
         m_consultArea = new TextArea("", 4, 20, TextArea.SCROLLBARS_VERTICAL_ONLY);
-        
+
         m_editArea.addKeyListener(this);
         m_editArea.addMouseListener(this);
         Panel pan = new Panel();
         pan.setLayout(new GridLayout(1,1));
-        
+
         pan.add(m_editArea);
-        
+
         add("Center", pan);
-        
+
         pan = new Panel();
         //pan.setLayout(new GridLayout(1,1));
         pan.setLayout(new BorderLayout());
@@ -200,46 +200,46 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         //panStatusBar.setLayout(new FlowLayout());
         m_lbLineNumber = new Label("Line 0/0", Label.LEFT);
         pan.add("South", m_lbLineNumber);
-        
+
         add("South", pan);
-        
+
         Font ft = new Font(JIPConsoleView.s_strDefaultFontName, Font.PLAIN, JIPConsoleView.s_nDefaultFontSize);
         m_editArea.setFont(ft);
         m_consultArea.setFont(ft);
-        
+
         m_strFileName = null;
-               
+
         setTitle("New program " + Integer.toString(s_nDocument));
-                                
+
         m_editArea.requestFocus();
-        
+
         updateLineCounter();
     }
-    
+
     private EditFrame(JIPEngine engine, String strFileName)
     {
         this(engine);
-        
+
         update(strFileName);
-                
+
         loadFile(strFileName);
     }
-    
+
     public void onDestroy()
     {
         checkChanged();
         s_docsVector.removeElement(this);
-        
+
         super.onDestroy();
-        
+
     }
-    
+
      public void actionPerformed(ActionEvent e)
      {
         String command = e.getActionCommand();
-         
+
          //System.out.println(command);
-         
+
         if (command.equals("New"))
          {
             checkChanged();
@@ -249,9 +249,9 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         else if (command.equals("Open"))
          {
             checkChanged();
-    
+
             m_editArea.setText("");
-            
+
             String strFile = openFile();
              if(strFile != null)
              {
@@ -271,11 +271,11 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         {
             if(m_editArea.getText() == "")
                 return;
-                
+
             waitCursor(true);
-            
+
             consultFile();
-            
+
             waitCursor(false);
         }
 //       else if(command.startsWith(":"))
@@ -312,7 +312,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             onDestroy();
         }
      }
-    
+
 //    public void itemStateChanged(ItemEvent e)
 //    {
 //        if(e.getSource() instanceof CheckboxMenuItem)
@@ -334,7 +334,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         else
             m_editArea.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
-    
+
     private final String openFile()
     {
         String strFileName = null;
@@ -343,20 +343,20 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             FileDialog fDlg = new FileDialog(this, "Open", FileDialog.LOAD);
             fDlg.setModal(true);
             fDlg.show();
-    
+
             if(fDlg.getFile() == null)
                 return null;
-            
+
             strFileName = fDlg.getDirectory() + fDlg.getFile();
         }
         catch(SecurityException ex)
         {
             m_consultArea.append("\n:<e> You cannot open file maybe you are running JIP from a web page. \nDue to security limitation imposed by the browser you cannot open or save file on local machine");
         }
-        
+
         return strFileName;
     }
-    
+
     public boolean saveFileEx()
     {
         if(m_strFileName == null)
@@ -369,17 +369,17 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
     {
         if(!m_bChanged)
             return true;
-        
+
         try
         {
             StringReader sbins = new StringReader(m_editArea.getText());
             BufferedReader ins = new BufferedReader(sbins);
             PrintWriter     outs = new PrintWriter(new FileWriter(m_strFileName));
-            
+
             String strLine;
             while ((strLine = ins.readLine()) != null)
                 outs.println(strLine);
-                
+
             ins.close();
             outs.close();
         }
@@ -393,18 +393,18 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             m_consultArea.append("\n:<e> " + ex.getMessage());
             return false;
         }
-        
+
         m_consultArea.append("\n:Saved file: " + m_strFileName);
-        
+
         m_bChanged = false;
-        
+
         return true;
     }
 
     private boolean saveFileAs()
     {
         String strFileName = null;
-        
+
         try
         {
             FileDialog fDlg = new FileDialog(this, "Save the trace as", FileDialog.SAVE);
@@ -413,7 +413,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             fDlg.show();
             if(fDlg.getFile() == null)
                 return false;
-            
+
             strFileName = fDlg.getDirectory() + fDlg.getFile();
         }
         catch(SecurityException ex)
@@ -421,11 +421,11 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             m_consultArea.append("\n:<e> You cannot save the file maybe you are running JIP from a web page. \nDue to security limitation imposed by the browser you cannot open or save file on local machine");
             return true;
         }
-                
+
         update(strFileName);
-        
+
         m_bChanged = true;
-        
+
         return saveFile();
     }
 
@@ -441,26 +441,26 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             consultFile();
             return;
         }
-        
+
         m_bChanged = true;
     }
-    
+
     public void keyReleased(KeyEvent e)
     {
         updateLineCounter();
     }
 
     public void keyTyped(KeyEvent e){}
-    
+
     private void consultFile()
     {
         if(!saveFileEx())
             m_consultArea.append("\n:<e> " + "File not saved");
-                
+
         try
         {
             ByteArrayInputStream ins = new ByteArrayInputStream(m_editArea.getText().getBytes());
-            
+
             m_engine.addEventListener(this);
             m_engine.consultStream(ins, m_strFileName);
             //m_engine.consultFile(m_strFileName);
@@ -474,21 +474,21 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             m_consultArea.append("\n:<e> " + ex.getMessage());
         }
     }
-    
+
     private void loadFile(Reader reader)
     {
         try
         {
             BufferedReader ins = new BufferedReader(reader);
-            
+
             String strFile = "";
-            
+
             String strLine;
             while ((strLine = ins.readLine()) != null)
                 strFile += strLine + "\n";
-                
+
             ins.close();
-            
+
             m_editArea.setText(strFile);
             m_editArea.requestFocus();
         }
@@ -502,12 +502,12 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             m_consultArea.append("\n:<e> " + ex.getMessage());
             return;
         }
-        
+
         updateLineCounter();
-            
+
         m_bChanged = false;
     }
-    
+
     private void loadFile(String strFilePath)
     {
         URL url = null;
@@ -545,7 +545,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             return;
         }
     }
-    
+
     private void loadURL(URL url)
     {
         try
@@ -569,7 +569,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         m_strFileName = strTitle;
         setTitle(strTitle);
     }
-        
+
     private void checkChanged()
     {
         if(m_bChanged)
@@ -578,7 +578,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
                 saveFileEx();
         }
     }
-    
+
     private int countLine(int nEnd)
     {
         String strContent = m_editArea.getText().substring(0, nEnd);
@@ -599,56 +599,56 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         //return tok.countTokens();
         return nLineCount;
     }
-    
+
     private void updateLineCounter()
     {
         int nTotalLine = countLine(m_editArea.getText().length()) + 1;
         int nCurLine = countLine(m_editArea.getCaretPosition()) + 1;
         int nCurCol = m_editArea.getCaretPosition() - m_editArea.getText().substring(0, m_editArea.getCaretPosition()).lastIndexOf('\n');
-        
+
         m_lbLineNumber.setText("[Line: " + nCurLine + "/" + nTotalLine + "] - [Col: " + nCurCol + "]");
     }
-    
+
     public void mouseClicked(MouseEvent e)
     {
-        
+
     }
-    
+
     public void mousePressed(MouseEvent e)
     {
-        
+
     }
-    
+
     public void mouseReleased(MouseEvent e)
     {
         updateLineCounter();
     }
-    
+
     public void mouseEntered(MouseEvent e)
     {
-        
+
     }
-    
+
     public void mouseExited(MouseEvent e)
     {
-        
+
     }
-    
+
     // A Start event occurred
     public void openNotified(JIPEvent e)
     {
     }
-    
+
     public void moreNotified(JIPEvent e)
     {
     }
-    
+
     // A solution event occurred
     public void solutionNotified(JIPEvent e)
     {
-     
+
     }
-    
+
     // A Term has been notified with notify/2
     public void termNotified(JIPEvent e)
     {
@@ -664,21 +664,21 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
             }
         }
     }
-        
+
     // The end has been reached because there wasn't more solutions
     public void endNotified(JIPEvent e)
     {
-        
+
     }
-    
+
     public void closeNotified(JIPEvent e)
     {
-        
+
     }
-    
+
     // An error (exception) has been raised up by prolog engine
     public void errorNotified(JIPErrorEvent e)
     {
-        
+
     }
 }
