@@ -46,11 +46,28 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
     	if(args.length == 1)
     	{
     		if(args[0].equals("-debug"))
+    		{
     			JIPDebugger.debug = true;
+    		}
+    		else if(args[0].startsWith("-h"))
+    		{
+    			printHelp();
+    			return;
+    		}
     	}
 
         JIPConsole console = new JIPConsole();
         console.processArgs(args);
+    }
+
+    public static void printHelp()
+    {
+    	System.out.println("*************************************************");
+        System.out.println("** JIProlog GUI v" + JIPConsoleController.VERSION);
+        System.out.println("** Based on JIProlog v" + JIPEngine.getVersion());
+        System.out.println("** " + JIPEngine.getCopyrightInfo());
+        System.out.println("*************************************************");
+        System.out.println("\nUsage: java -classpath jiprolog.jar;jipgui.jar com.ugos.jiprolog.gui.JIPConsole [-s<searchpath>] [-c<file to compile>]* [-o<file to edit>]*");
     }
 
     // Constructor
@@ -92,8 +109,23 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
     {
         for(int i = 0; i < args.length; i++)
         {
-        	if(!args[i].startsWith("-"))
-        		m_consoleCtrl.openFile(args[i]);
+        	if(args[i].startsWith("-o"))
+        	{
+        		m_consoleCtrl.openFile(args[i].substring(2));
+        	}
+        	else if(args[i].startsWith("-c"))
+        	{
+        		m_consoleCtrl.compileFile(args[i].substring(2));
+        	}
+        	else if(args[i].startsWith("-s"))
+				try
+        		{
+					m_consoleCtrl.getJIPEngine().setSearchPath(args[i].substring(2));
+				}
+        		catch (IOException e)
+        		{
+					e.printStackTrace();
+				}
         }
     }
 
