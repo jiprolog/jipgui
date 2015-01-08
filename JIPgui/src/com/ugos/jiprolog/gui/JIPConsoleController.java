@@ -224,6 +224,11 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
         EditFrame.openFile(m_prolog, strFileName);
     }
 
+    public void compileFile(String strFileName)
+    {
+    	m_prolog.compileFile(strFileName);
+    }
+
     public void onQuery(String strQuery)
     {
         if(m_nQueryHandle != -1 && m_prolog.hasMoreChoicePoints(m_nQueryHandle))

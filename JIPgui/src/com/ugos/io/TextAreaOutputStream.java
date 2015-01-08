@@ -4,7 +4,7 @@ import java.awt.*;
 import java.io.*;
 import java.nio.charset.Charset;
 
-import com.ugos.util.Encoder;
+import com.ugos.util.ValueEncoder;
 
 
 public class TextAreaOutputStream extends OutputStream
