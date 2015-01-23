@@ -21,11 +21,11 @@ public class SplashWnd extends Window
     {
         super(mainFrame);
 
-        Image jipIco = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/icoJip.gif"));
+        Image jipIco = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/beer.png"));
 
 //        if(s_screenSize.width >= 640)
 //        {
-            jipIco = jipIco.getScaledInstance(45, 40, Image.SCALE_SMOOTH);
+            jipIco = jipIco.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 //        }
 //        else
 //        {

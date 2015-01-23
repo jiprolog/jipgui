@@ -41,8 +41,6 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
     // To run JIP as an application
     public static void main(String args[])
     {
-//    	JIPDebugger.debug = true;
-
     	if(args.length == 1)
     	{
     		if(args[0].equals("-debug"))
@@ -87,7 +85,7 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
             Thread.currentThread().sleep(1500);
 
             // set icon
-            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/icoJip.gif")));
+            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/beer.png")));
         }
         catch(Throwable ex)
         {}
