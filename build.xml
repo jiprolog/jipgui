@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project jipgui">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="C:/Progetti/Applicazioni/JIProlog/Deploy/JIProlog/jipconsole.jar" filesetmanifest="mergewithoutmain">
+            <manifest>
+                <attribute name="Main-Class" value="com.ugos.jiprolog.gui.JIPConsole"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+            <fileset dir="C:/Progetti/Applicazioni/JIProlog/JIPgui/lib"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/Progetti/Applicazioni/JIProlog/JIPgui/sqlite-jdbc-3.7.2.jar"/>
+            <fileset dir="C:/Progetti/Applicazioni/JIProlog/JIProlog/lib"/>
+        </jar>
+    </target>
+</project>

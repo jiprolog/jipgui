@@ -45,7 +45,7 @@ public class SplashWnd extends Window
         lab.setFont(new Font("Arial", Font.PLAIN, 11));
         lab.setForeground(Color.white);
         pan.add(lab);
-        lab = new Label("Copyright (c) 1999-2014 by Ugo Chirico", Label.CENTER);
+        lab = new Label("Copyright (c) 1999-2015 by Ugo Chirico", Label.CENTER);
         lab.setFont(new Font("Arial", Font.PLAIN, 9));
         lab.setForeground(Color.white);
         pan.add(lab);
