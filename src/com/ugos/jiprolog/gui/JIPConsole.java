@@ -38,24 +38,21 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 
     private JIPConsoleController m_consoleCtrl;
 
+    private static String initializationGoal = null;
+
     // To run JIP as an application
     public static void main(String args[])
     {
-    	if(args.length == 1)
-    	{
-    		if(args[0].equals("-debug"))
-    		{
-    			JIPDebugger.debug = true;
-    		}
-    		else if(args[0].startsWith("-h"))
-    		{
-    			printHelp();
-    			return;
-    		}
-    	}
-
         JIPConsole console = new JIPConsole();
-        console.processArgs(args);
+        try {
+			console.processArgs(args);
+		} catch (JIPSyntaxErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public static void printHelp()
@@ -65,7 +62,11 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
         System.out.println("** Based on JIProlog v" + JIPEngine.getVersion());
         System.out.println("** " + JIPEngine.getCopyrightInfo());
         System.out.println("*************************************************");
-        System.out.println("\nUsage: java -classpath jiprolog.jar;jipgui.jar com.ugos.jiprolog.gui.JIPConsole [-s<searchpath>] [-c<file to compile>]* [-o<file to edit>]*");
+        System.out.println("\nOptions:");
+        System.out.println("\n -debug to run JIProlog in debug mode");
+        System.out.println("\n -o <file> to open a prolog file in edit mode");
+        System.out.println("\n -c <file> to compile a prolog file");
+        System.out.println("\n -g <goal> initialization goal");
     }
 
     // Constructor
@@ -103,28 +104,75 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
         m_consoleCtrl.start();
     }
 
-    private void processArgs(String args[])
+    private void processArgs(String args[]) throws JIPSyntaxErrorException, IOException
     {
-        for(int i = 0; i < args.length; i++)
-        {
-        	if(args[i].startsWith("-o"))
+    	if(args.length == 1)
+    	{
+    		if(args[0].startsWith("-h"))
+    		{
+    			printHelp();
+    			return;
+    		}
+    		else if(args[0].startsWith("-version"))
         	{
-        		m_consoleCtrl.openFile(args[i].substring(2));
+    	        System.out.println("JIProlog GUI v" + JIPConsoleController.VERSION);
+    	        System.out.println("Based on JIProlog v" + JIPEngine.getVersion());
         	}
-        	else if(args[i].startsWith("-c"))
-        	{
-        		m_consoleCtrl.compileFile(args[i].substring(2));
-        	}
-        	else if(args[i].startsWith("-s"))
-				try
-        		{
-					m_consoleCtrl.getJIPEngine().setSearchPath(args[i].substring(2));
-				}
-        		catch (IOException e)
-        		{
-					e.printStackTrace();
-				}
-        }
+    	}
+    	else
+    	{
+	        for(int i = 0; i < args.length; i++)
+	        {
+	        	if(args[i].startsWith("-debug"))
+	        	{
+	        		JIPDebugger.debug = true;
+	        	}
+	        	else if(args[i].startsWith("-o"))
+	        	{
+	        		if(i + 1 < args.length)
+	        		{
+	        			m_consoleCtrl.openFile(args[i + 1]);
+	        			i++;
+	        		}
+	        	}
+	        	else if(args[i].startsWith("-c"))
+	        	{
+	        		if(i + 1 < args.length)
+	        		{
+	        			m_consoleCtrl.consultFile(args[i + 1]);
+	        			i++;
+	        		}
+	        	}
+	        	else if(args[i].startsWith("-g"))
+	        	{
+	        		if(i + 1 < args.length)
+	        		{
+	        			initializationGoal = args[i + 1];
+	        			i++;
+	        		}
+	        	}
+	        	else if(args[i].startsWith("-d"))
+	        	{
+					try
+	        		{
+		        		if(i + 1 < args.length)
+		        		{
+		        			m_consoleCtrl.getJIPEngine().setSearchPath(args[i + 1]);
+		        			i++;
+		        		}
+					}
+	        		catch (IOException e)
+	        		{
+						e.printStackTrace();
+					}
+	        	}
+	        }
+    	}
+
+    	if(initializationGoal != null)
+    	{
+    		 m_consoleCtrl.runGoal(initializationGoal);
+    	}
     }
 
     public void onDestroy()
