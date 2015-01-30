@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="sqlite-jdbc-3.7.2.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/JIProlog"/>
+	<classpathentry exported="true" kind="lib" path="sqlite-jdbc-3.7.2.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/JIProlog"/>
 	<classpathentry kind="output" path="lib"/>
 </classpath>

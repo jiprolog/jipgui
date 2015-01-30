@@ -43,7 +43,7 @@ import com.ugos.jiprolog.igui.IJIPConsoleView;
 public class JIPConsoleController implements IJIPConsoleController, JIPEventListener
 {
     public static final String TITLE   = "JIProlog - Java Internet Prolog";
-    public static final String VERSION = "4.0.0.1";
+    public static final String VERSION = "4.0.1.1";
     public static final String PROMPT  = "JIP:-";
 
     private Frame m_mainFrame;
@@ -227,6 +227,32 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
     public void compileFile(String strFileName)
     {
     	m_prolog.compileFile(strFileName);
+    }
+
+    public void consultFile(String strFileName)
+    {
+    	m_outs.println("consult('" + strFileName + "').");
+    	m_consoleView.editable(false);//m_mainArea.setEnabled(false);
+    	try {
+			m_prolog.consultFile(strFileName);
+		} catch (JIPSyntaxErrorException ex) {
+			ex.printStackTrace();
+			m_outs.println("Error:");
+			m_outs.println(ex.getMessage());
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			m_outs.println(ex.getMessage());
+		}
+
+    	m_consoleView.editable(true);
+    	m_consoleView.prompt();
+    }
+
+    public void runGoal(String goal) throws JIPSyntaxErrorException, IOException
+    {
+    	m_outs.println(goal);
+    	onQuery(goal);
     }
 
     public void onQuery(String strQuery)
