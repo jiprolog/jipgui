@@ -404,19 +404,9 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
                 {
                     if(!vars[i].isAnonymous())
                     {
-                        m_outs.println(vars[i].getName() + " = " + vars[i].toString(m_prolog));
-//                        try
-//                        {
-//                            System.out.println(Encoder.bytesToHexString(vars[i].toString(m_prolog).getBytes(m_prolog.getCurrentEncoding())));
-//                        }
-//                        catch (UnsupportedEncodingException e1)
-//                        {
-//                            // TODO Auto-generated catch block
-//                            e1.printStackTrace();
-//                        }
+                        m_outs.println(vars[i].getName() + " = " + vars[i].toStringq(m_prolog));
                     }
                 }
-
 
                 m_consoleView.waitCursor(false);
 

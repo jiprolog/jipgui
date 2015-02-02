@@ -148,6 +148,10 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
     	        System.out.println("JIProlog GUI v" + JIPConsoleController.VERSION);
     	        System.out.println("Based on JIProlog v" + JIPEngine.getVersion());
         	}
+    		else if(args[0].startsWith("-debug"))
+        	{
+        		JIPDebugger.debug = true;
+        	}
     	}
     	else
     	{
