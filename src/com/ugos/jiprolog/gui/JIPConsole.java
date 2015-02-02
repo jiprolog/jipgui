@@ -21,16 +21,15 @@
 
 package com.ugos.jiprolog.gui;
 
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
-import java.net.*;
+import java.awt.Toolkit;
+import java.io.IOException;
+import java.util.Vector;
 
-import com.ugos.awt.*;
-import com.ugos.io.*;
-import com.ugos.jiprolog.engine.*;
-import com.ugos.jiprolog.igui.*;
+import com.ugos.awt.ApplicationFrame;
+import com.ugos.jiprolog.JIProlog;
+import com.ugos.jiprolog.engine.JIPDebugger;
+import com.ugos.jiprolog.engine.JIPEngine;
+import com.ugos.jiprolog.engine.JIPSyntaxErrorException;
 
 public class JIPConsole extends ApplicationFrame //implements Runnable
 {
@@ -38,14 +37,18 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 
     private JIPConsoleController m_consoleCtrl;
 
-    private static String initializationGoal = null;
+    private static Vector<String> fileToOpen = new Vector<String>();
+    private static Vector<String> fileToConsult = new Vector<String>();
+    private static String initializationGoal;
+    private static String searchPath;
+    private static boolean noui;
+
 
     // To run JIP as an application
     public static void main(String args[])
     {
-        JIPConsole console = new JIPConsole();
         try {
-			console.processArgs(args);
+			processArgs(args);
 		} catch (JIPSyntaxErrorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,6 +56,33 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+        if(noui)
+        {
+        	JIProlog.main(args);
+        }
+        else
+        {
+        	JIPConsole console = new JIPConsole();
+
+        	if(searchPath != null)
+        		console.m_consoleCtrl.setSearchPath(searchPath);
+
+        	for(String file : fileToOpen)
+        	{
+        		console.m_consoleCtrl.openFile(file);
+        	}
+
+        	for(String file : fileToConsult)
+        	{
+        		console.m_consoleCtrl.consultFile(file);
+        	}
+
+        	if(initializationGoal != null)
+        	{
+        		console.m_consoleCtrl.onQuery(initializationGoal);
+        	}
+        }
     }
 
     public static void printHelp()
@@ -104,7 +134,7 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
         m_consoleCtrl.start();
     }
 
-    private void processArgs(String args[]) throws JIPSyntaxErrorException, IOException
+    private static void processArgs(String args[]) throws JIPSyntaxErrorException, IOException
     {
     	if(args.length == 1)
     	{
@@ -127,11 +157,15 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 	        	{
 	        		JIPDebugger.debug = true;
 	        	}
+	        	else if(args[i].startsWith("-n"))
+	        	{
+	        		noui = true;
+	        	}
 	        	else if(args[i].startsWith("-o"))
 	        	{
 	        		if(i + 1 < args.length)
 	        		{
-	        			m_consoleCtrl.openFile(args[i + 1]);
+	        			fileToOpen.add(args[i + 1]);
 	        			i++;
 	        		}
 	        	}
@@ -139,7 +173,7 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 	        	{
 	        		if(i + 1 < args.length)
 	        		{
-	        			m_consoleCtrl.consultFile(args[i + 1]);
+	        			fileToConsult.add(args[i + 1]);
 	        			i++;
 	        		}
 	        	}
@@ -153,26 +187,19 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 	        	}
 	        	else if(args[i].startsWith("-d"))
 	        	{
-					try
+	        		if(i + 1 < args.length)
 	        		{
-		        		if(i + 1 < args.length)
-		        		{
-		        			m_consoleCtrl.getJIPEngine().setSearchPath(args[i + 1]);
-		        			i++;
-		        		}
-					}
-	        		catch (IOException e)
-	        		{
-						e.printStackTrace();
-					}
+	        			searchPath = args[i + 1];
+	        			i++;
+	        		}
 	        	}
 	        }
     	}
 
-    	if(initializationGoal != null)
-    	{
-    		 m_consoleCtrl.runGoal(initializationGoal);
-    	}
+//    	if(initializationGoal != null)
+//    	{
+//    		 m_consoleCtrl.runGoal(initializationGoal);
+//    	}
     }
 
     public void onDestroy()

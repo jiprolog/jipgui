@@ -43,7 +43,7 @@ import com.ugos.jiprolog.igui.IJIPConsoleView;
 public class JIPConsoleController implements IJIPConsoleController, JIPEventListener
 {
     public static final String TITLE   = "JIProlog - Java Internet Prolog";
-    public static final String VERSION = "4.0.1.1";
+    public static final String VERSION = "4.0.1.2";
     public static final String PROMPT  = "JIP:-";
 
     private Frame m_mainFrame;
@@ -240,7 +240,9 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
 			m_outs.println("Error:");
 			m_outs.println(ex.getMessage());
 		} catch (IOException ex) {
-			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			m_outs.println(ex.getMessage());
+	    } catch (Exception ex) {
 			ex.printStackTrace();
 			m_outs.println(ex.getMessage());
 		}
