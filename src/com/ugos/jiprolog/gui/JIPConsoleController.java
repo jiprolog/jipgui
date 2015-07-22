@@ -43,7 +43,7 @@ import com.ugos.jiprolog.igui.IJIPConsoleView;
 public class JIPConsoleController implements IJIPConsoleController, JIPEventListener
 {
     public static final String TITLE   = "JIProlog - Java Internet Prolog";
-    public static final String VERSION = "4.0.1.4";
+    public static final String VERSION = "4.0.1.6";
     public static final String PROMPT  = "JIP:-";
 
     private Frame m_mainFrame;
@@ -259,7 +259,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
 
     public void onQuery(String strQuery)
     {
-    	System.out.println("query handle " + m_nQueryHandle);
+//    	System.out.println("query handle " + m_nQueryHandle);
 
         if(m_nQueryHandle != -1 && m_prolog.hasMoreChoicePoints(m_nQueryHandle))
         {
@@ -285,13 +285,13 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
             else
             {
                 m_prolog.closeQuery(m_nQueryHandle);
-                m_nQueryHandle = -1;
                 m_consoleView.waitCursor(false);
             }
         }
         else
         {
             //System.out.println("strQuery " + strQuery);
+        	strQuery = strQuery.trim();
 
             if(strQuery.equals(""))
             {
@@ -329,7 +329,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
             synchronized(m_prolog)
             {
                 m_nQueryHandle = m_prolog.openQuery(query);
-                System.out.println("query handle 2 " + m_nQueryHandle);
+//                System.out.println("query handle 2 " + m_nQueryHandle);
                 m_consoleView.requestFocus();
             }
         }
@@ -364,10 +364,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
     public void onStop()
     {
         if(m_nQueryHandle > -1)
-        {
             m_prolog.closeQuery(m_nQueryHandle);
-            m_nQueryHandle = -1;
-        }
 
         m_consoleView.requestFocus();
     }
@@ -420,7 +417,6 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
                 if(!e.getSource().hasMoreChoicePoints(e.getQueryHandle()))
                 {
                     m_prolog.closeQuery(e.getQueryHandle());
-                    m_nQueryHandle = -1;
                 }
                 else
                 {
@@ -506,7 +502,6 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
                 m_outs.println("No");
 
                 m_prolog.closeQuery(e.getQueryHandle());
-                m_nQueryHandle = -1;
             }
         }
     }
@@ -592,7 +587,6 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
                 m_consoleView.requestFocus();
 
                 m_prolog.closeQuery(e.getQueryHandle());
-                m_nQueryHandle = -1;
             }
             else
             {
