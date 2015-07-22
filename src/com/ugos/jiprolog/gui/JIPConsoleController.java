@@ -43,7 +43,7 @@ import com.ugos.jiprolog.igui.IJIPConsoleView;
 public class JIPConsoleController implements IJIPConsoleController, JIPEventListener
 {
     public static final String TITLE   = "JIProlog - Java Internet Prolog";
-    public static final String VERSION = "4.0.1.4";
+    public static final String VERSION = "4.0.1.5";
     public static final String PROMPT  = "JIP:-";
 
     private Frame m_mainFrame;
@@ -259,7 +259,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
 
     public void onQuery(String strQuery)
     {
-    	System.out.println("query handle " + m_nQueryHandle);
+//    	System.out.println("query handle " + m_nQueryHandle);
 
         if(m_nQueryHandle != -1 && m_prolog.hasMoreChoicePoints(m_nQueryHandle))
         {
@@ -292,6 +292,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
         else
         {
             //System.out.println("strQuery " + strQuery);
+        	strQuery = strQuery.trim();
 
             if(strQuery.equals(""))
             {
@@ -329,7 +330,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
             synchronized(m_prolog)
             {
                 m_nQueryHandle = m_prolog.openQuery(query);
-                System.out.println("query handle 2 " + m_nQueryHandle);
+//                System.out.println("query handle 2 " + m_nQueryHandle);
                 m_consoleView.requestFocus();
             }
         }
