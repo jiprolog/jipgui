@@ -116,7 +116,7 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
             Thread.currentThread().sleep(1500);
 
             // set icon
-            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/beer.png")));
+            setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/logo.png")));
         }
         catch(Throwable ex)
         {}

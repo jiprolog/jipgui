@@ -21,7 +21,7 @@ public class SplashWnd extends Window
     {
         super(mainFrame);
 
-        Image jipIco = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/beer.png"));
+        Image jipIco = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/logo.png"));
 
 //        if(s_screenSize.width >= 640)
 //        {
