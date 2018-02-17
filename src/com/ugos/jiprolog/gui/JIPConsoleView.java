@@ -143,12 +143,12 @@ public abstract class JIPConsoleView extends Panel implements IJIPConsoleView, A
         topPanel.setBackground(BKGCOLOR);
 
         Label lb = new Label("JIProlog - Java Internet Prolog v" + JIPEngine.getVersion(), Label.CENTER);
-        lb.setFont(new Font("TimesRoman", Font.BOLD, s_nDefaultFontSize + 1));
+        lb.setFont(new Font("Arial", Font.BOLD, s_nDefaultFontSize + 1));
         lb.setForeground(Color.white);
         topPanel.add(lb);
 
         lb = new Label("by Ugo Chirico - http://www.jiprolog.com", Label.CENTER);
-        lb.setFont(new Font("TimesRoman", Font.BOLD, s_nDefaultFontSize));
+        lb.setFont(new Font("Arial", Font.BOLD, s_nDefaultFontSize));
         lb.setForeground(Color.white);
         topPanel.add(lb);
 
@@ -315,12 +315,12 @@ public abstract class JIPConsoleView extends Panel implements IJIPConsoleView, A
 
     public void printHeader()
     {
-        m_outs.println("***************************************");
+//        m_outs.println("***************************************");
         m_outs.println("* JIProlog - Java Internet Prolog");
         m_outs.println("* Version: " + JIPEngine.getVersion());
         m_outs.println("* " + JIPEngine.getCopyrightInfo());//Copyright (c) 1999-2014 By Ugo Chirico.");
         m_outs.println("* License: " + JIPEngine.getLicenseInfo());
-        m_outs.println("***************************************");
+//        m_outs.println("***************************************");
         m_mainArea.prompt();
     }
 

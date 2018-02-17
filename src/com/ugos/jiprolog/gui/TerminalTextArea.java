@@ -54,7 +54,6 @@ public class TerminalTextArea extends TextArea implements KeyListener
         m_historyVect = new Vector();
 
         // update history
-//        m_historyVect.addElement("");
         m_nHistoryIndex = -1;
 
         addKeyListener(this);
@@ -72,7 +71,10 @@ public class TerminalTextArea extends TextArea implements KeyListener
         if(!m_bEnableAction)
             return;
 
-        if((e.getModifiers() & e.CTRL_MASK) == e.CTRL_MASK)
+        if((e.getModifiers() & e.CTRL_MASK) == e.CTRL_MASK || 
+        		(e.getModifiers() & e.CTRL_DOWN_MASK) == e.CTRL_DOWN_MASK ||
+        		(e.getModifiers() & e.META_MASK) == e.META_MASK || 
+        		(e.getModifiers() & e.META_DOWN_MASK) == e.META_DOWN_MASK)
         {
             return;
         }
