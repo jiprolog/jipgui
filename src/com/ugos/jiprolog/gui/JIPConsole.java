@@ -112,8 +112,8 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 
         try
         {
-            Thread.currentThread().yield();
-            Thread.currentThread().sleep(1500);
+			Thread.yield();
+			Thread.sleep(1500);
 
             // set icon
             setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/com/ugos/jiprolog/gui/resources/logo.png")));
@@ -208,7 +208,7 @@ public class JIPConsole extends ApplicationFrame //implements Runnable
 
     public void onDestroy()
     {
-        m_consoleCtrl.onDestroy();
+    	m_consoleCtrl.onExit();         
         super.onDestroy();
     }
 }

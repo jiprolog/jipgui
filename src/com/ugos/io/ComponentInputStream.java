@@ -15,10 +15,12 @@ public class ComponentInputStream extends InputStream implements KeyListener
         m_component.addKeyListener(this);
     }
 
-    public void close() throws IOException
-    {
-        super.close();
+    public synchronized void close() throws IOException
+    {        
+        m_char = -1;
+        notify();
         m_component.removeKeyListener(this);
+        super.close();
     }
 
     public synchronized int read() throws IOException

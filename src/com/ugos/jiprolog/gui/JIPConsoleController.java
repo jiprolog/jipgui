@@ -43,7 +43,7 @@ import com.ugos.jiprolog.igui.IJIPConsoleView;
 public class JIPConsoleController implements IJIPConsoleController, JIPEventListener
 {
     public static final String TITLE   = "JIProlog - Java Internet Prolog";
-    public static final String VERSION = "4.0.1.6";
+    public static final String VERSION = JIPEngine.getVersion();
     public static final String PROMPT  = "JIP:-";
 
     private Frame m_mainFrame;
@@ -72,8 +72,8 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
         m_consoleView = consoleView;
 
         try
-        {
-            Thread.currentThread().sleep(1500);
+        {            
+			Thread.sleep(1500);
         }
         catch(InterruptedException ex)
         {}
@@ -215,6 +215,13 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
 
     public void onDestroy()
     {
+    	InputStream ins = m_consoleView.getInputStream();
+    	try {
+			ins.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         m_prolog.closeAllQueries();
         m_consoleView.onDestroy();
     }
@@ -265,7 +272,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
         {
             m_outs.println();
 
-            if(strQuery.equals("y"))
+            if(strQuery.equals("y") || strQuery.equals(";"))
             {
                 // New
                 m_consoleView.enableNew(false);
@@ -420,7 +427,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
                 }
                 else
                 {
-                    m_outs.print("more? (y/n) ");
+                    m_outs.print("more? ");
                     m_outs.flush();
 
                     m_consoleView.recordHistory(false);
