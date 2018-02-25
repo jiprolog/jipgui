@@ -42,17 +42,17 @@ public class SplashWnd extends Window
         Panel pan = new Panel();
         pan.setLayout(new GridLayout(4,1));
         Label lab = new Label("JIProlog v" + JIPEngine.getVersion(), Label.CENTER);
-        lab.setFont(new Font("Arial", Font.PLAIN, 11));
+        lab.setFont(new Font("Arial", Font.PLAIN, 12));
         lab.setForeground(Color.white);
         pan.add(lab);
-        lab = new Label("Copyright (c) 1999-2015 by Ugo Chirico", Label.CENTER);
-        lab.setFont(new Font("Arial", Font.PLAIN, 9));
+        lab = new Label(JIPEngine.getCopyrightInfo(), Label.CENTER);
+        lab.setFont(new Font("Arial", Font.PLAIN, 10));
         lab.setForeground(Color.white);
         pan.add(lab);
-        lab = new Label("All rights reserved", Label.CENTER);
-        lab.setFont(new Font("Arial", Font.PLAIN, 9));
-        lab.setForeground(Color.white);
-        pan.add(lab);
+//        lab = new Label("All rights reserved", Label.CENTER);
+//        lab.setFont(new Font("Arial", Font.PLAIN, 9));
+//        lab.setForeground(Color.white);
+//        pan.add(lab);
         lab = new Label("http://www.jiprolog.com", Label.CENTER);
         lab.setFont(new Font("Arial", Font.PLAIN, 11));
         lab.setForeground(Color.white);
@@ -71,7 +71,7 @@ public class SplashWnd extends Window
 
         if(s_screenSize.width >= 640)
         {
-            size = new Dimension(210,130);
+            size = new Dimension(300,160);
             setBounds(
                 (s_screenSize.width - size.width) / 2,
                 (s_screenSize.height - size.height) / 2,
