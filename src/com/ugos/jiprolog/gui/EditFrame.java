@@ -80,7 +80,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
         s_docsVector.addElement(this);
 
         // icons
-        URL url = getClass().getResource("/com/ugos/jiprolog/gui/resources/icoJipDoc.gif");
+        URL url = getClass().getResource("/com/ugos/jiprolog/gui/resources/logo.png");
         if(url != null)
             setIconImage(Toolkit.getDefaultToolkit().getImage(url));
 
