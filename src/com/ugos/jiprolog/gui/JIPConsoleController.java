@@ -21,11 +21,15 @@
 
 package com.ugos.jiprolog.gui;
 
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Rectangle;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import com.ugos.jiprolog.engine.JIPCons;
 import com.ugos.jiprolog.engine.JIPDebugger;
@@ -36,11 +40,13 @@ import com.ugos.jiprolog.engine.JIPEventListener;
 import com.ugos.jiprolog.engine.JIPRuntimeException;
 import com.ugos.jiprolog.engine.JIPSyntaxErrorException;
 import com.ugos.jiprolog.engine.JIPTerm;
+import com.ugos.jiprolog.engine.JIPTraceEvent;
+import com.ugos.jiprolog.engine.JIPTraceListener;
 import com.ugos.jiprolog.engine.JIPVariable;
 import com.ugos.jiprolog.igui.IJIPConsoleController;
 import com.ugos.jiprolog.igui.IJIPConsoleView;
 
-public class JIPConsoleController implements IJIPConsoleController, JIPEventListener
+public class JIPConsoleController implements IJIPConsoleController, JIPEventListener, JIPTraceListener
 {
     public static final String TITLE   = "JIProlog - Java Internet Prolog";
     public static final String VERSION = JIPEngine.getVersion();
@@ -61,6 +67,10 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
 
     // Stream
     private PrintStream      m_outs = null;
+    
+    // Trace PrintStrem
+    private PrintStream      m_traceOuts = null;
+    
 
     // Constructor
     public JIPConsoleController(IJIPConsoleView consoleView, String strCodeBase)
@@ -351,7 +361,7 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
     {
         EditFrame.openFile(m_prolog);
     }
-
+    
     public void onExit()
     {
         onDestroy();
@@ -368,6 +378,29 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
         m_consoleView.requestFocus();
     }
 
+    public void onRedirectTrace()
+    {
+    	if(m_traceOuts == null)
+    	{
+    		try {
+				m_traceOuts = new PrintStream("./trace-" + System.currentTimeMillis() + ".log");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		m_prolog.removeTraceListener(m_traceDlg);
+    		m_prolog.addTraceListener(this);
+    	}
+    	else
+    	{
+    		m_traceOuts.close();
+    		m_traceOuts = null;
+    		m_prolog.removeTraceListener(this);
+    		m_prolog.addTraceListener(m_traceDlg);
+    	}
+    }
+
+    
     public void onStop()
     {
         if(m_nQueryHandle > -1)
@@ -605,4 +638,131 @@ public class JIPConsoleController implements IJIPConsoleController, JIPEventList
             }
         }
     }
+
+    
+    public void callNotified(JIPTraceEvent e)
+    {
+        m_traceOuts.print("[" + e.getLevel() + "]");
+//        m_outs.print("> ");
+//        m_outs.print(strSpace);
+        m_traceOuts.print("CALL:  ");
+        m_traceOuts.println(e.getTerm().toString(m_prolog));
+        m_traceOuts.flush();
+        
+        Thread.currentThread().yield();
+                
+       
+        // Don't wait for user input
+        e.nextStep();
+ 
+    }
+
+    public void foundNotified(JIPTraceEvent e)
+    {
+    	m_traceOuts.print("[" + e.getLevel() + "]");
+//      m_outs.print(e.getLevel());
+//        m_outs.print("> ");
+//        m_outs.print(strSpace);
+    	m_traceOuts.print("FOUND: ");
+                
+    	m_traceOuts.println(e.getTerm().toString(m_prolog));
+        
+        Thread.currentThread().yield();
+        
+       
+        // Don't wait for user input
+        e.nextStep();
+
+    }
+    
+    public void bindNotified(JIPTraceEvent e)
+    {
+    	m_traceOuts.print("[" + e.getLevel() + "]");
+//        m_outs.print(e.getLevel());
+//        m_outs.print("> ");
+//        m_outs.print(strSpace);
+    	m_traceOuts.print("BIND:  ");
+    	m_traceOuts.println(e.getTerm().toString(m_prolog));
+                
+        Thread.currentThread().yield();
+        
+        //dont waiy
+        e.nextStep();
+    }
+
+    public void failNotified(JIPTraceEvent e)
+    {
+        
+    	m_traceOuts.print("[" + e.getLevel() + "]");
+//        m_outs.print(e.getLevel());
+//        m_outs.print("> ");
+//        m_outs.print(strSpace);
+    	m_traceOuts.print("FAIL:  ");
+    	m_traceOuts.println(e.getTerm().toString(m_prolog));
+                        
+    
+        Thread.currentThread().yield();
+        
+        // Don't wait for user input
+        e.nextStep();
+    }
+
+    public void redoNotified(JIPTraceEvent e)
+    {
+       
+    	m_traceOuts.print("[" + e.getLevel() + "]");
+//        m_outs.print(e.getLevel());
+//        m_outs.print("> ");
+//        m_outs.print(strSpace);
+    	m_traceOuts.print("REDO:  ");
+        
+    	m_traceOuts.println(e.getTerm().toString(m_prolog));
+                
+       
+               
+        Thread.currentThread().yield();
+        
+        // Don't wait for user input
+        e.nextStep();
+    }
+    
+    public void exitNotified(JIPTraceEvent e)
+    {
+       
+    	m_traceOuts.print("[" + e.getLevel() + "]");
+//        m_outs.print(e.getLevel());
+//        m_outs.print("> ");
+//        m_outs.print(strSpace);
+    	m_traceOuts.print("EXIT:  ");
+    	m_traceOuts.println(e.getTerm().toString(m_prolog));
+                
+        Thread.currentThread().yield();
+        
+      
+        // Don't wait for user input
+        e.nextStep();
+    }
+    
+    // A Start event occurred
+    public void startNotified(JIPTraceEvent e)
+    {
+       
+        m_traceOuts.println();
+        m_traceOuts.println("-----START TRACING-----");
+        m_traceOuts.println();
+        
+        e.nextStep();
+    }
+    
+    // A Stop event occurred
+    public void stopNotified(JIPTraceEvent e)
+    {
+        m_traceOuts.println();
+        m_traceOuts.println("-----STOP TRACING-----");
+        m_traceOuts.println();
+   
+        e.nextStep();
+    }
+    
+  
 }

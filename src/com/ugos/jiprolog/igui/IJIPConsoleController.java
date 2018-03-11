@@ -19,6 +19,8 @@ public interface IJIPConsoleController
     
     public void onReset();
     
+    public void onRedirectTrace();
+    
     public void onStop();
     
     public void onDestroy();

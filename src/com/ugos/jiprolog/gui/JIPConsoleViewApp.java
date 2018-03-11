@@ -41,6 +41,7 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
 {
     private Menu             m_mnuFile;
     private Menu             m_mnuTools;
+   
     //private Menu             m_mnuLibs;
     private Menu             m_mnuColors;
     private Menu             m_mnuFontSize;
@@ -48,6 +49,8 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
     private Menu             m_mnuWinDim;
     private Menu             m_mnuReg;
 
+    MenuItem				 m_mniTrace;
+    
 //    private CheckboxMenuItem m_mnuiTrace;
     private CheckboxMenuItem m_curmnuiFontSize;
     private CheckboxMenuItem m_curmnuiDimensions = null;
@@ -96,6 +99,12 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
         CheckboxMenuItem mic;
 
         m_mnuTools = new Menu("Tools");
+        
+        m_mniTrace = mi = new MenuItem("Trace to file");
+        mi.setActionCommand("TraceToFile");
+        mi.addActionListener(this);
+        m_mnuTools.add(mi);
+        
         //mnsh = new MenuShortcut('d');
         mi = new MenuItem("Reset database");
         mi.setActionCommand("Reset");
@@ -256,6 +265,18 @@ public class JIPConsoleViewApp extends JIPConsoleView implements ItemListener
             {
                 m_consoleCtrl.onExit();
                 m_consoleCtrl.onDestroy();
+            }
+            else if(command.equals("TraceToFile"))
+            {
+            	m_mniTrace.setActionCommand("TraceToWindows");
+            	m_mniTrace.setLabel("Trace to Trace dialog");
+                m_consoleCtrl.onRedirectTrace();
+            }
+            else if(command.equals("TraceToWindows"))
+            {
+            	m_mniTrace.setActionCommand("TraceToFile");
+            	m_mniTrace.setLabel("Trace to file");
+                m_consoleCtrl.onRedirectTrace();
             }
             else if(command.equals("Reset"))
             {

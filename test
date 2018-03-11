@@ -1,2 +1,0 @@
-test(Z):-
-   '$kernel':prolog_flag(dialect, X), '$kernel':prolog_flag(version, Y), Z =.. [X, Y].
