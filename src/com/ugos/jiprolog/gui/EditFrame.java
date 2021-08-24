@@ -149,7 +149,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
 
         /////////////////
 
-        // add win menù
+        // add win menï¿½
         menu = new Menu("Windows");
 
         //mnsh = new MenuShortcut('j');
@@ -459,7 +459,7 @@ public class EditFrame extends XFrame implements JIPEventListener, ActionListene
 
         try
         {
-            ByteArrayInputStream ins = new ByteArrayInputStream(m_editArea.getText().getBytes());
+            StringReader ins = new StringReader(m_editArea.getText());
 
             m_engine.addEventListener(this);
             m_engine.consultStream(ins, m_strFileName);
